@@ -7,6 +7,7 @@ public class DataPlayer
     private int _countMoney;
     private int _countHealth;
     private int _countPower;
+    private int _countCrime;
 
     private List<IEnemy> _enemies = new List<IEnemy>();
 
@@ -26,6 +27,19 @@ public class DataPlayer
             {
                 _countMoney = value;
                 Notifier(DataType.Money);
+            }
+        }
+    }
+
+    public int CountCrime
+    {
+        get => _countCrime;
+        set
+        {
+            if (_countCrime != value)
+            {
+                _countCrime = value;
+                Notifier(DataType.Crime);
             }
         }
     }
@@ -56,17 +70,17 @@ public class DataPlayer
         }
     }
 
-    public void Attach(IEnemy enemy)
+    public void Attach(IEnemy enemy)//добавление подписчика
     {
         _enemies.Add(enemy);
     }
 
-    public void Detach(IEnemy enemy)
+    public void Detach(IEnemy enemy)//удаление подписчика
     {
         _enemies.Remove(enemy);
     }
 
-    private void Notifier(DataType dataType)
+    private void Notifier(DataType dataType)//уведомление подписчиков об изменнии данных у плеера
     {
         foreach(var enemy in _enemies)
             enemy.Update(this, dataType);
@@ -90,6 +104,13 @@ public class Health : DataPlayer
 public class Power : DataPlayer
 {
     public Power(string titleData) : base(titleData)
+    {
+    }
+}
+
+public class Crime : DataPlayer
+{
+    public Crime(string titleData) : base(titleData)
     {
     }
 }
